@@ -4,10 +4,172 @@
 <meta charset="utf-8">
 <title>정미니갤러리</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="../css/gallery.css" rel="stylesheet">
+<link href="../css/gallary.css" rel="stylesheet">
 <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
+<div class="control_wrapper">
+	<div class="control_area">
+		<label for="imgWidth">이미지 너비</label>
+		<input id="imgWidth" type="number" min="50" max="500" value="100" step="50">
+	</div>
+</div>
+<div class="photo_wrapper">
+	<div class="photo_area">
+		<ul class="photo_list">
+		<li>
+			<div class="image_area">
+				<a href="#" class="thumb">
+					<img src="../images/image01.jpeg">
+				</a>
+			</div>
+		</li>
+		<li>
+			<div class="image_area">
+				<a href="#" class="thumb">
+					<img src="../images/image02.jpeg">
+				</a>
+			</div>
+		</li>
+		<li>
+			<div class="image_area">
+				<a href="#" class="thumb">
+					<img src="../images/image03.jpeg">
+				</a>
+			</div>
+		</li>
+		<li>
+			<div class="image_area">
+				<a href="#" class="thumb">
+					<img src="../images/image04.jpeg">
+				</a>
+			</div>
+		</li>
+		<li>
+			<div class="image_area">
+				<a href="#" class="thumb">
+					<img src="../images/image05.jpeg">
+				</a>
+			</div>
+		</li>
+		<li>
+			<div class="image_area">
+				<a href="#" class="thumb">
+					<img src="../images/image06.jpeg">
+				</a>
+			</div>
+		</li>
+		<li>
+			<div class="image_area">
+				<a href="#" class="thumb">
+					<img src="../images/image07.jpeg">
+				</a>
+			</div>
+		</li>
+		<li>
+			<div class="image_area">
+				<a href="#" class="thumb">
+					<img src="../images/image08.jpeg">
+				</a>
+			</div>
+		</li>
+		<li>
+			<div class="image_area">
+				<a href="#" class="thumb">
+					<img src="../images/image09.jpeg">
+				</a>
+			</div>
+		</li>
+		<li>
+			<div class="image_area">
+				<a href="#" class="thumb">
+					<img src="../images/image10.jpeg">
+				</a>
+			</div>
+		</li>
+		<li>
+			<div class="image_area">
+				<a href="#" class="thumb">
+					<img src="../images/image11.jpeg">
+				</a>
+			</div>
+		</li>
+		<li>
+			<div class="image_area">
+				<a href="#" class="thumb">
+					<img src="../images/image12.jpeg">
+				</a>
+			</div>
+		</li>
+		<li>
+			<div class="image_area">
+				<a href="#" class="thumb">
+					<img src="../images/image13.jpeg">
+				</a>
+			</div>
+		</li>
+		<li>
+			<div class="image_area">
+				<a href="#" class="thumb">
+					<img src="../images/image14.jpeg">
+				</a>
+			</div>
+		</li>
+		<li>
+			<div class="image_area">
+				<a href="#" class="thumb">
+					<img src="../images/image15.jpeg">
+				</a>
+			</div>
+		</li>
+		<li>
+			<div class="image_area">
+				<a href="#" class="thumb">
+					<img src="../images/image16.jpeg">
+				</a>
+			</div>
+		</li>
+		<li>
+			<div class="image_area">
+				<a href="#" class="thumb">
+					<img src="../images/image17.jpeg">
+				</a>
+			</div>
+		</li>
+		<li>
+			<div class="image_area">
+				<a href="#" class="thumb">
+					<img src="../images/image18.jpeg">
+				</a>
+			</div>
+		</li>
+		<li>
+			<div class="image_area">
+				<a href="#" class="thumb">
+					<img src="../images/image19.jpeg">
+				</a>
+			</div>
+		</li>
+		<li>
+			<div class="image_area">
+				<a href="#" class="thumb">
+					<img src="../images/image20.jpeg">
+				</a>
+			</div>
+		</li>
+		</ul>
+	</div>
+</div>
+<script src="../js/gallary.js"></script>
+<script type="text/javascript">
 
+jm.modules.Gallary.init({
+	imgWidth: $('#imgWidth').val(), 
+	imgContainer: '.photo_list',
+	imgArea: '.thumb'
+});
+
+// var gallary = new jm.modules.Gallary.init();
+</script>
 </body>
 </html>
