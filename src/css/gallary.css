@@ -23,12 +23,16 @@ table{border-collapse:collapse;border-spacing:0}
 input::-ms-clear{display:none}
 
 /* 이미지 갤러리 */
-.photo_list{overflow:hidden;width:100%;padding:10px}
+.photo_list{position:relative;/*overflow:hidden;*/width:100%;padding:10px;width:800px;height:800px}
 .photo_list li{display:inline-block;border:1px solid #FFF;margin:-3px}
+/*.photo_list li{position:absolute;border:1px solid #FFF;margin:-3px}*/
 .photo_list li a{display:block}
 .photo_list .image_area{position:relative}
-.photo_list .image_area a{position:relative;width:500px}
+.photo_list .image_area a{position:relative;width:100px}
 .photo_list .image_area img{width:100%}
+.photo_list li.big{}
+.show_area{display:block;position:absolute;top:0;right:0;bottom:0;left:0;background-color:#000;opacity:0.5}
+
 /*.photo_list .image_area .bar{display:inline-block;width:1px;height:100%;vertical-align:middle}*/
 /*.photo_list .image_area a:before{content:'';display:inline-block;width:0;height:100%;vertical-align:middle}*/
 /*.photo_list .image_area img{max-width:90%;max-height:90%;width:auto;height:auto;vertical-align:middle}*/

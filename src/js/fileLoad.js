@@ -1,33 +1,37 @@
-/**
- * Created by Naver on 2016-05-25.
- */
 
-var currentUrl = document.URL;
-var basicUrl = currentUrl.split("html")[0];
+jm.modules.Loader = function() {
+    var currentUrl = document.URL;
+    var basicUrl = currentUrl.split("html")[0];
 
-var imageFiles; //images폴더 내에 있는 이미지들
-var imageListClassName = "photo_list";
+    var imageFiles; //images폴더 내에 있는 이미지들
+    var imageListClassName = "photo_list";
 
-$.ajax({
-    type:'GET',
-    crossOrigin:true,
-    url: basicUrl + 'files.json',
+    var init = function($this){
+        $.ajax({
+            type:'GET',
+            crossOrigin:true,
+            dataType: 'JSON',
+            url: basicUrl + 'files.json',
 
-    complete:function(data) {
-        imageFiles = data.responseJSON;
-        makeElImage();
-    },
+            complete: function(data) {
+                imageFiles = data.responseJSON.img;
+                // makeElImage();
+                // addEvent();
 
-    error:function(data){
-}
-});
+                // $this.trigger('finish');
+                $this.trigger('dataLoadFinish', {"data": imageFiles});
+            },
 
-var makeElImage = function(){
-    var data =  {site: 'NetTuts'}, template =   'Welcome! You are at <%= site %>';
+            error: function(data){
 
-    var parsedTemplate = _.template(template,  data );
+            }
+        });
+    }
 
-    console.log(names);
-    console.log(imageFiles);
-    debugger;
+    return {
+        init: function(){
+            console.log("loader init 실행");
+            return init($(this));
+        }
+    };
 };
