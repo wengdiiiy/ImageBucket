@@ -9,102 +9,111 @@ jm.modules.Gallary = function() {
     var bucketList;
     var bucketFactoryObj;
     var userImageData;
-    var temp = $("<div class='temp'>");
+    var elTemp = $("<div class='temp'>");
+	var elUserImageData;
+
+	var welContainer;
 
 	function init(htOptions){
 		options = htOptions;
 		userImageData = options.imgData;
+		welContainer = $(options.imgContainer);
+
+		welContainer.css('display', 'none');
 
 		attachEvents();
-		update();
+		viewUpdate();
+	}
 
-		//버킷 생성
-		bucketFactoryObj = jm.modules.BucketFactory();
-		getImagesInfo();
-		arrange();
-	};
-
+	//이미지 너비 인풋창 이벤트
 	function attachEvents(){
 		$(document).on('change', $('#imgWidth'), changeWidth);
-	};
+	}
 
 	function changeWidth(e){
 		options.imgWidth = e.data.val();
 		update();
 	}
 
-
 	function update(){
-		var welContainer = $(options.imgContainer);
-		images = welContainer.find(options.imgArea);
+		images = welContainer.find('.column');
 
 		$.each(images, function( index, value ) {
 			$(value).css('width', options.imgWidth);
 		});
+
+
+		$(options.imgContainer).css('width', $(window).width());
+		$(options.imgContainer).css('height', $(window).height());
+
+		viewUpdate();
 	}
 
+	function viewUpdate(){
+		welContainer.children().remove();
+		elTemp.children().remove();
 
-	function getImagesInfo(){
-		// currentImages = $(options.imgArea);
-		currentImages = temp;
+		makeTempElement(); //temp에 데이터 넣기
+		elUserImageData = elTemp.children();
 
+		//버킷 생성
+		bucketFactoryObj = jm.modules.BucketFactory();
+		arrange();
 	}
 
 	function arrange(){
 		var boxWidth = $(options.imgContainer).width();
-		var boxHeight = $(options.imgContainer).height();
 
 		var bucketCount = boxWidth / options.imgWidth;
-		var bucketMax = boxHeight;
 
 		//버킷팩토리 만든다
 		bucketFactoryObj.setBucketCount(bucketCount);
 		bucketList = bucketFactoryObj.getBucketList();
 
-		console.log("너비 " + boxWidth);
-		console.log("높이 " + boxHeight);
-		console.log("이미지 너비 " + options.imgWidth);
-		console.log("버킷 개수 " +  bucketCount);
-		console.log(bucketList);
-
 		//버킷에 넣는다
 		//버킷팩토리에 들어갈 자리를 찾고 추가
-		$.each(userImageData, function(index, img){
+		$.each(elUserImageData, function(index, img){
 			bucketFactoryObj.findBucket(img);
 		});
 
-		$.each(bucketList, function(index, img){
-			console.log(bucketList[index].getImages());
-		});
-
-		addDom();
+		addDom(bucketList);
 	}
 
 
-	function addDom(){
-		var count = bucketFactoryObj.getBucketCount();
+	function addDom() {
+		var bucketList = bucketFactoryObj.getBucketList();
 
 		var photoArea = $('.photo_area');
 
-		for(var i = 1; i < count + 1; i++){
-			var column = $('<div>').addClass('column').attr('id', '_column'+i);
-			photoArea.append(column); 
-		}
-		makeElement()
+		$.each(bucketList, function(index, bucket){
+			var column = $('<div>').addClass('column').css('width', options.imgWidth).attr('id', '_column' + (index + 1));
+
+			var imagesInBucket = bucket.getImages();
+
+			for(var i = 0; i < imagesInBucket.length; i++){
+				var photoWrapper = $("<div>").attr("class", "image_area");
+				var photoLinkArea = $("<a>").attr("href", "#").attr("class","thumb");
+
+				$(imagesInBucket[i]).appendTo(photoLinkArea);
+				photoLinkArea.appendTo(photoWrapper);
+
+				column.append(photoLinkArea);
+			}
+
+			photoArea.append(column);
+		});
+
+		welContainer.css('display', 'block');
 	}
 
-	function makeElement(){
+	function makeTempElement(){
         $.each(userImageData, function( index, value ) {
-            var photoWrapper = $("<div>").attr("class", "image_area");
-            var photoLinkArea = $("<a>").attr("href", "#").attr("class","thumb");
-            
-            $("<img>").attr("src", '../images/' + value).appendTo(photoLinkArea);
-            photoLinkArea.appendTo(photoWrapper);
-            $(temp).append(photoLinkArea);
+			var welImageDump = $("<img>").attr("src", '../images/' + value).css('width', options.imgWidth);
+			welImageDump.appendTo(elTemp);
         });
-        debugger;
-        //addEvent();
+		$('body').append(elTemp);
     }
+
 
     function addEvent(){
         $('.'+imageListClassName).on('click', 'li', function(e){
@@ -150,8 +159,8 @@ jm.modules.BucketFactory = function(){
 	}
 
 	function setBucketCount(count){
-		bucketCount = count;
-		bucketList.length = count;
+		bucketCount = parseInt(count);
+		bucketList.length = bucketCount;
 
 		$.each(bucketList, function( index, value ) {
 			var bucket = jm.modules.Bucket();
@@ -184,7 +193,7 @@ jm.modules.BucketFactory = function(){
 };
 
 jm.modules.Bucket = function(){
-	var max = 200;
+	var max = 1000;
 	var remain = max;
 	var imageArray = $.makeArray();
 
@@ -210,10 +219,6 @@ jm.modules.Bucket = function(){
 
 		addImage: function(element, height){
 			return addImage(element, height);
-		},
-
-		getMax: function(){
-			return max;
 		},
 
 		getImages: function(){

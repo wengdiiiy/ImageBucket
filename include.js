@@ -17,6 +17,7 @@ console.log('UIO FILES : ' + files);
 files.forEach(function(item, index){
     var sName = item.split('_')[0];
 
+    debugger;
     oJson[index].push(item);
 });
 

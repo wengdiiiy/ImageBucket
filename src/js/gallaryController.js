@@ -10,8 +10,8 @@ jm.modules.GallaryController = function() {
 
 		$(loader).on('dataLoadFinish', function(e, receivedData){
 			gallaryObj.init({
-	            imgWidth: $('#imgWidth').val(), 
-	            imgContainer: '.photo_list',
+	            imgWidth: $('#imgWidth').val(),
+	            imgContainer: '.photo_area',
 	            imgArea: '.image_area',
 	            imgData: receivedData.data
 	        });
